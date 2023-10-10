@@ -8,7 +8,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ArrayList<PessoaFisica> listaPf = new ArrayList<>();
+        ArrayList<PessoaJuridica> listaPj = new ArrayList<>();
         PessoaFisica metodoPf = new PessoaFisica();
+        PessoaJuridica metodoPj = new PessoaJuridica();
 
 
         System.out.println("Bem vindo ao sistema de cadastro de pessoas Fisicas e Juridicas");
@@ -31,7 +33,7 @@ public class Main {
                         System.out.println("0- Voltar");
                         opcaoPf = leitor.nextLine();
 
-                        switch (opcaoPf){
+                        switch (opcaoPf) {
                             case "1":
                                 PessoaFisica novaPf = new PessoaFisica();
                                 Endereco novoEndPf = new Endereco();
@@ -49,7 +51,7 @@ public class Main {
 
                                 if (idade.getYears() >= 18) {
                                     System.out.println("Idade valida");
-                                }else {
+                                } else {
                                     System.out.println("Idade invalida");
                                     break;
                                 }
@@ -63,7 +65,7 @@ public class Main {
                                 String endCom = leitor.next();
                                 if (endCom.equals("S")) {
                                     novoEndPf.endComercial = true;
-                                }else {
+                                } else {
                                     novoEndPf.endComercial = false;
                                 }
 
@@ -75,20 +77,20 @@ public class Main {
 
                                 break;
                             case "2":
-                                if (listaPf.size() > 0){
+                                if (listaPf.size() > 0) {
 
-                                    for (PessoaFisica cadapf: listaPf) {
+                                    for (PessoaFisica cadapf : listaPf) {
                                         System.out.println("Nome: " + cadapf.nome);
                                         System.out.println("CPF: " + cadapf.cpf);
                                         System.out.println("Data de Nascimento: " + cadapf.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                                        System.out.println("Imposto a ser pago: " + metodoPf.CalcularImposto(metodoPf.rendimento));
+                                        System.out.println("Imposto a ser pago: " + metodoPf.CalcularImposto(cadapf.rendimento));
                                         System.out.println("Endereco: " + cadapf.endereco.logradouro + "-" + cadapf.endereco.numero);
                                         System.out.println();
                                         System.out.println("Aperte enter para continuar");
                                         leitor.nextLine();
                                     }
 
-                                }else {
+                                } else {
                                     System.out.println("A lista esta vazia");
                                 }
                                 break;
@@ -99,20 +101,85 @@ public class Main {
                                 System.out.println("Erro");
                                 break;
                         }
-                    }while (!opcaoPf.equals("0"));
+                    } while (!opcaoPf.equals("0"));
                     break;
                 case "2":
-                    System.out.println("case2");
-                    break;
-                case "0":
-                    System.out.println("case0");
-                    break;
-                default:
-                    System.out.println("erro");
+                    String opcaoPj;
+                    do {
+                        System.out.println("Digite uma opção:");
+                        System.out.println("1- Cadastrar PJ");
+                        System.out.println("2- Listar PJ");
+                        System.out.println("0- Voltar");
+                        opcaoPj = leitor.nextLine();
+
+
+                        switch (opcaoPj) {
+                            case "1":
+                                PessoaJuridica novaPj = new PessoaJuridica();
+                                Endereco novoEndPj = new Endereco();
+
+                                System.out.println("Digite a razao social:");
+                                novaPj.razaoSocial = leitor.nextLine();
+                                System.out.println("Digite o cnpj:");
+                                novaPj.cnpj = leitor.nextLine();
+                                System.out.println("Digite o rendimento:");
+                                novaPj.rendimento = leitor.nextFloat();
+
+
+                                System.out.println("Digite o logradouro:");
+                                novoEndPj.logradouro = leitor.next();
+                                System.out.println("Digite o numero:");
+                                novoEndPj.numero = leitor.nextInt();
+
+                                System.out.println("Este endereco e comercial? S/N:");
+                                String endCom = leitor.next();
+                                if (endCom.equals("S")) {
+                                    novoEndPj.endComercial = true;
+                                } else {
+                                    novoEndPj.endComercial = false;
+                                }
+
+                                novaPj.endereco = novoEndPj;
+
+                                listaPj.add(novaPj);
+
+                                System.out.println("Cadastro realizado com sucesso!");
+                                break;
+
+
+                            case "2":
+                                if (listaPj.size() > 0) {
+
+                                    for (PessoaJuridica cadapj : listaPj) {
+                                        System.out.println("Nome: " + cadapj.razaoSocial);
+                                        System.out.println("CNPJ: " + cadapj.cnpj);
+                                        System.out.println("Imposto a ser pago: " + metodoPj.CalcularImposto(cadapj.rendimento));
+                                        System.out.println("Endereco: " + cadapj.endereco.logradouro + "-" + cadapj.endereco.numero);
+                                        System.out.println();
+                                        System.out.println("Aperte enter para continuar");
+                                        leitor.nextLine();
+                                    }
+
+                                } else {
+                                    System.out.println("A lista esta vazia");
+                                }
+                                break;
+
+                            case "0":
+                                System.out.println("case0");
+                                break;
+                            default:
+                                System.out.println("erro");
+                                break;
+
+
+                        }
+
+                    }while (!opcaoPj.equals("0"));
                     break;
             }
 
-        } while (!opcao.equals("0")  );
+        } while (!opcao.equals("0"));
 
 
     }
